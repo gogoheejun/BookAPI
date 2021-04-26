@@ -1,5 +1,6 @@
 package com.hjhj.bookapi
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -105,6 +106,8 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
+
+//함수들..
     private fun initSearchEditText(){
         binding.searchEditText.setOnKeyListener { v, keyCode, event ->
             if(keyCode == KeyEvent.KEYCODE_ENTER && event.action == MotionEvent.ACTION_DOWN){
@@ -157,7 +160,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private  fun initBookRecyclerView(){
-        adapter = BookAdapter()
+        adapter = BookAdapter(myItemClickListener = {
+            val intent = Intent(this, DetailActivity::class.java)
+//            intent.putExtra("bookModel",it) //클래스자체를 넘길수있어 단,book이 데이터모델이라 parcelize 추가로 추가해야 오류안남
+//            Log.e("BookAdapter",it.title)
+            startActivity(intent)
+        })
 
         binding.bookRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.bookRecyclerView.adapter = adapter
